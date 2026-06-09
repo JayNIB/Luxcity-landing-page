@@ -89,17 +89,23 @@
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)); /* Adds an elegant premium drop-shadow */
        }
 
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 600;
+       /* UNIFORM PREMIUM BRAND FONT AND GOLD COLOR STYLING */
+        .brand-title-main {
+            font-family: 'Inter', sans-serif; /* Changes the entire line to the same modern Inter font */
+            font-size: 2.1rem;
+            font-weight: 700;
             letter-spacing: 0.5px;
-            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95);
+            color: var(--primary-gold); /* Forces the whole title to share the exact same gold color */
+            text-shadow: 0 3px 14px rgba(0, 0, 0, 0.95); /* High-contrast shadow for premium legibility */
+            margin-top: 5px;
         }
 
-        header h1 span {
-            color: var(--primary-gold);
+    /* Responsive fix for smaller mobile screens */
+    @media (max-width: 480px) {
+        .brand-title-main {
+            font-size: 1.6rem;
         }
+    }
 
         /* Hotel Info Section */
         .hotel-info-section {
@@ -473,7 +479,7 @@
             <img src="logo-Luxcity-2024.png" alt="Luxcity Logo" class="luxcity-logo-img">
     
         <header>
-            <h1>Luxcity <span>Hotel & Apartment</span></h1>
+            <h1 class="brand-title-main">Luxcity Hotel & Apartment</h1>
         </header>
     </div>
 
