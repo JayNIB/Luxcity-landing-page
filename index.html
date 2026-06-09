@@ -58,44 +58,44 @@
         }
 
      /* Inner Header Background Wrapper Card */
-    .brand-header-bg-wrapper {
-            position: relative;
-            width: 100%;
-            padding: 65px 20px 55px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+.brand-header-bg-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 65px 20px 55px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     
     /* 1. RESET LAYER: Wipes out default colors to kill the white border seam */
-            background-color: transparent !important;
-            outline: none !important;
-            border-top: none !important;
-            border-left: none !important;
-            border-right: none !important;
-            border-bottom: 1px solid var(--border-color);
+    background-color: transparent !important;
+    outline: none !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color);
 
     /* 2. LAYER INJECT: Renders your background photo imagery seamlessly */
     background-image: 
         linear-gradient(to bottom, rgba(30, 30, 30, 0.1) 0%, rgba(30, 30, 30, 0.5) 60%, var(--card-bg) 100%),
         url('luxcityfront.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 
     /* 3. HARD CLIPPING MASK: Slices off any stubborn pixels that bleed past the card frame */
-            border-top-left-radius: 16px;
-            border-top-right-radius: 16px;
-            clip-path: inset(0 0 0 0 round 16px 16px 0 0);
-            -webkit-clip-path: inset(0 0 0 0 round 16px 16px 0 0); /* Safari Engine Support */
-        }
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    clip-path: inset(0 0 0 0 round 16px 16px 0 0);
+    -webkit-clip-path: inset(0 0 0 0 round 16px 16px 0 0); /* Safari Engine Support */
+}
 
-        @media (min-width: 768px) {
+@media (min-width: 768px) {
     .brand-header-bg-wrapper { 
         padding: 95px 30px 75px 30px; 
-        }
     }
+}
         .luxcity-logo-img {
             width: auto;
             height: 75px; /* Adjust this number to make your logo larger or smaller */
