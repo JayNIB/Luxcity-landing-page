@@ -2,152 +2,236 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxcity Hotel & Apartment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Luxcity Hotel & Apartment - Room Previews</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS RESET FOR FULL WIDTH */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
+        :root {
+            --primary-gold: #c5a880;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #cccccc;
+            --telegram-color: #0088cc;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            width: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* TRUE FULL BLEED: Body resets prevent white borders */
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            display: block;
+            min-height: 100vh;
+            padding: 0; 
+            margin: 0;
             overflow-x: hidden;
         }
 
-        /* LOGO SECTION */
-        .logo-header {
+        .landing-container {
             width: 100%;
-            background-color: #121212;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+            max-width: 100%; 
+            background: var(--dark-bg);
         }
-        .logo {
-            max-width: 180px;
-            height: auto;
-        }
-
-        /* HERO & LAYOUT */
-        .hero-banner {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(to top, #121212 0%, rgba(18,18,18,0.4) 40%, rgba(18,18,18,0) 100%), url('luxcityfront.jpg');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 30px;
-        }
-
-        .brand-title { color: #c5a880; font-size: 2rem; }
 
         .content-wrapper {
-            width: 90%;
+            width: 100%;
             max-width: 850px;
             margin: 0 auto;
-            padding: 20px 0;
+        }
+
+        /* HERO SECTION */
+        .hero-banner-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-banner-container { height: 500px; }
+        }
+
+        .hero-banner-image {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to top, var(--dark-bg) 0%, rgba(18, 18, 18, 0.4) 40%, rgba(18, 18, 18, 0) 100%),
+                url('luxcityfront.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .brand-header-overlay {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            padding: 0 20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* LOGO STYLING */
+        .hero-logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .brand-title-main {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.9);
+        }
+
+        @media (max-width: 480px) {
+            .brand-title-main { font-size: 1.6rem; }
+            .hero-logo { max-width: 120px; }
+        }
+
+        .content-top-block, .content-bottom-block {
+            padding: 30px 20px;
+            width: 100%;
+        }
+
+        .hotel-info-section {
+            background: var(--card-bg);
+            border-left: 3px solid var(--primary-gold);
+            padding: 20px;
+            border-radius: 4px 8px 8px 4px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .selection-box { margin-bottom: 20px; }
+        .selection-box label { display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--primary-gold); margin-bottom: 8px; font-weight: 600; }
+
+        .punchline { font-size: 1.2rem; font-weight: 700; color: #ffffff; margin-bottom: 15px; }
+        .punchline span { color: var(--primary-gold); }
+
+        .room-dropdown {
+            width: 100%; padding: 16px; background-color: var(--card-bg); color: var(--text-light);
+            border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; cursor: pointer;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c5a880' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat; background-position: right 15px center; background-size: 18px;
         }
 
         /* FULL WIDTH VIDEO */
-        .video-section {
+        .video-fullwidth-wrapper {
             width: 100vw;
-            background: #000;
-            margin: 20px 0;
+            position: relative;
+            left: 50%; right: 50%;
+            margin-left: -50vw; margin-right: -50vw;
+            background-color: #000000;
         }
+
         .video-container {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            aspect-ratio: 16/9;
-        }
-        video { width: 100%; height: 100%; object-fit: cover; }
-
-        /* ROOM CONTROLS */
-        .room-dropdown {
-            width: 100%;
-            padding: 15px;
-            background: #1e1e1e;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 8px;
-            margin-top: 10px;
+            width: 100%; max-width: 1400px; margin: 0 auto;
+            aspect-ratio: 16 / 9; position: relative;
         }
 
-        /* BUTTONS & FEATURES */
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            text-align: center;
-            background: #c5a880;
-            color: #121212;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
-            margin-top: 10px;
+        .video-container video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; display: block;
         }
 
-        .features-section {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
+        /* BUTTONS */
+        .cta-container { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+        @media (min-width: 576px) { .cta-container { flex-direction: row; } }
+        .btn { flex: 1; padding: 18px; font-weight: 700; text-decoration: none; border-radius: 8px; text-align: center; color: #121212; }
+        .btn-booking { background-color: var(--primary-gold); }
+        .btn-telegram { background-color: var(--telegram-color); color: #fff; }
+
+        /* FEATURES & FACILITIES */
+        .features-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+        .feature-item { display: flex; align-items: center; color: var(--text-light); }
+        .feature-item svg { width: 18px; height: 18px; margin-right: 10px; color: var(--primary-gold); flex-shrink: 0; }
+        
+        .facility-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; text-align: center; }
+        
+        /* FOOTER */
+        .hotel-footer { border-top: 1px solid var(--border-color); padding: 30px 20px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 20px; color: var(--text-muted); }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
-    <header class="logo-header">
-        <img src="logo-Luxcity-2024.png" alt="Luxcity Logo" class="logo">
-    </header>
-
-    <div class="hero-banner">
-        <h1 class="brand-title">Luxcity Hotel & Apartment</h1>
-    </div>
-
-    <div class="content-wrapper">
-        <p>Welcome to Luxcity Hotel & Apartment – Phnom Penh's premier destination for luxury accommodation.</p>
-
-        <label for="roomSelect" style="display:block; margin-top:20px;">Choose a Room Style</label>
-        <select id="roomSelect" class="room-dropdown" onchange="updatePageData()">
-            <option value="studio-queen">Studio Queen</option>
-            <option value="studio-twin">Studio Twin</option>
-        </select>
-    </div>
-
-    <div class="video-section">
-        <div class="video-container">
-            <video id="roomVideo" autoplay muted loop playsinline controls>
-                <source id="videoSource" src="" type="video/mp4">
-            </video>
-        </div>
-    </div>
-
-    <div class="content-wrapper">
-        <a href="#" class="btn">Book Instantly Online</a>
+    <div class="landing-container" id="mainAppCard">
         
-        <div class="features-section">
-            <h3 id="featureTitle">Studio Queen Features</h3>
-            <div id="featureGrid"></div>
+        <div class="hero-banner-container">
+            <div class="hero-banner-image"></div>
+            <div class="brand-header-overlay">
+                <img src="logo.png" alt="Luxcity Logo" class="hero-logo">
+                <h1 class="brand-title-main">Luxcity Hotel & Apartment</h1>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="content-top-block">
+                <section class="hotel-info-section">
+                    <strong>Welcome to Luxcity Hotel & Apartment</strong> – Phnom Penh's premier destination for luxury accommodation and extended stays.
+                </section>
+
+                <div class="selection-box">
+                    <label for="roomSelect">Choose a Room Style</label>
+                    <div class="punchline">See it. Love it. <span>Secure it instantly.</span></div>
+                    
+                    <select id="roomSelect" class="room-dropdown" onchange="updatePageData()">
+                        <option value="studio-queen">Studio Queen</option>
+                        <option value="studio-twin">Studio Twin</option>
+                        <option value="deluxe-classic">Deluxe Classic</option>
+                        <option value="deluxe-premium">Deluxe Premium</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-fullwidth-wrapper">
+            <div class="video-container">
+                <video id="roomVideo" autoplay muted loop playsinline controls poster="thumbnails/deluxe-poster.jpg">
+                    <source id="videoSource" src="" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="content-bottom-block">
+                <div class="cta-container">
+                   <a href="#" target="_blank" class="btn btn-booking">Book Instantly</a>
+                   <a href="#" target="_blank" class="btn btn-telegram">Chat with Sales</a>
+                </div>
+
+                <section class="features-section">
+                    <h3 id="featureTitle">Room Features</h3>
+                    <div class="features-grid" id="featureGrid"></div>
+                </section>
+
+                <footer class="hotel-footer">
+                    <p style="text-align: center;">© 2026 Luxcity Hotel & Apartment</p>
+                </footer>
+            </div>
         </div>
     </div>
 
     <script>
         const roomData = {
-            "studio-queen": {
-                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971958/Luxcity_-_Studio_Queen_p9ja4y.mp4",
-                features: ["32 sqm Living Space", "1 King-Sized Bed", "City View Balcony"]
-            },
-            "studio-twin": {
-                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971940/Luxcity_-_Studio_Twin_uq7hgk.mp4",
-                features: ["36 sqm Space", "2 Twin Beds", "Modern Bathroom"]
-            }
+            "studio-queen": { video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971958/Luxcity_-_Studio_Queen_p9ja4y.mp4", title: "Studio Queen Features", features: ["32 sqm Living Space", "1 King-Sized Bed", "City View Balcony"] },
+            "studio-twin": { video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971940/Luxcity_-_Studio_Twin_uq7hgk.mp4", title: "Studio Twin Features", features: ["36 sqm Space", "2 Twin Beds", "Modern Bathroom"] },
+            "deluxe-classic": { video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780973052/Luxcity_-_Deluxe_Classic_tn9isf.mp4", title: "Deluxe Classic Features", features: ["55 sqm Premium Layout", "Separate Living Area", "Kitchenette"] },
+            "deluxe-premium": { video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971938/Luxcity_-_Deluxe_Premium_mi3bjg.mp4", title: "Deluxe Premium Features", features: ["85 sqm Massive Layout", "2 Bathrooms", "Washer & Dryer"] }
         };
 
         function updatePageData() {
@@ -155,16 +239,14 @@
             const data = roomData[selectedKey];
             const video = document.getElementById('roomVideo');
             const source = document.getElementById('videoSource');
-            
             source.src = data.video;
             video.load();
-            video.play();
-
+            video.play().catch(e => console.log("Autoplay blocked"));
+            
+            document.getElementById('featureTitle').innerText = data.title;
             const grid = document.getElementById('featureGrid');
-            grid.innerHTML = data.features.map(f => `<p>• ${f}</p>`).join('');
+            grid.innerHTML = data.features.map(f => `<div class="feature-item"><span>✓ ${f}</span></div>`).join('');
         }
-
-        // Initialize on load
         window.onload = updatePageData;
     </script>
 </body>
