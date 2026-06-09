@@ -81,15 +81,13 @@
             .main-content-body { padding: 0 30px 30px 30px; }
         }
 
-        .luxcity-logo-mark {
-            width: 65px;
-            height: 65px;
-            margin-bottom: 12px;
-            fill: none;
-            stroke: var(--primary-gold);
-            stroke-width: 1.5;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
-        }
+        .luxcity-logo-img {
+            width: auto;
+            height: 75px; /* Adjust this number to make your logo larger or smaller */
+            margin-bottom: 15px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)); /* Adds an elegant premium drop-shadow */
+       }
 
         header h1 {
             font-family: 'Playfair Display', serif;
@@ -472,14 +470,12 @@
     <div class="landing-container" id="mainAppCard">
         
         <div class="brand-header-bg-wrapper">
-            <svg class="luxcity-logo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="50,10 90,50 50,90 10,50" />
-                <path d="M35,35 L50,55 L65,35 M42,65 L58,65 M50,45 L50,65" stroke-linecap="round" />
-            </svg>
-            <header>
-                <h1>Luxcity <span>Hotel & Apartment</span></h1>
-            </header>
-        </div>
+            <img src="logo-Luxcity-2024.png" alt="Luxcity Logo" class="luxcity-logo-img">
+    
+        <header>
+            <h1>Luxcity <span>Hotel & Apartment</span></h1>
+        </header>
+    </div>
 
         <div class="main-content-body">
 
