@@ -24,7 +24,7 @@
         }
 
         body {
-            background-color: var(--dark-bg); /* Returns outer background to clean solid dark color */
+            background-color: var(--dark-bg);
             color: var(--text-light);
             display: flex;
             flex-direction: column;
@@ -34,8 +34,6 @@
             padding: 20px 15px;
         }
 
-        /* Remove or delete any old 'body::before' blocks completely if they are still in your file */
-
         @media (min-width: 768px) {
             body {
                 padding: 40px 20px;
@@ -43,86 +41,90 @@
         }
 
         /* Main Card Container */
-        /* Main Card Container */
         .landing-container {
             width: 100%;
             max-width: 800px;
             background: var(--card-bg);
             border-radius: 16px;
-            overflow: hidden; /* Tells the browser to cut the image perfectly to 16px */
-    
-        /* THE REAL FIX: Replacing standard border with a shadow-inset border that background images can NEVER overwrite */
-        box-shadow: 
-            0 0 0 1px var(--border-color), 
-            0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden; /* Tells the browser to cut nested text perfectly to 16px */
+            box-shadow: 
+                0 0 0 1px var(--border-color), 
+                0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-     /* Clean, Sophisticated Brand Header Area */
-.brand-header-clean {
-    width: 100%;
-    padding: 40px 20px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: transparent;
-}
+        /* Clean, Sophisticated Brand Header Area */
+        .brand-header-clean {
+            width: 100%;
+            padding: 40px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: transparent;
+        }
 
-/* Framed Property Banner Card (Safely Inside the Layout) */
-.hero-banner-container {
-    padding: 0 20px; /* Gives the image card beautiful padding away from the outer walls */
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 25px;
-}
+        /* Framed Property Banner Card (Safely Inside the Layout) */
+        .hero-banner-container {
+            padding: 0 20px; /* Gives the image card beautiful padding away from the outer walls */
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+        }
 
-.hero-banner-image {
-    width: 100%;
-    height: 240px; /* Height of your property showcase photo */
-    border-radius: 12px; /* Smooth rounded corners that stay perfectly intact */
-    border: 1px solid var(--border-color);
-    
-    /* Loads your image with an elegant dimming gradient overlay */
-    background: 
-        linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(18, 18, 18, 0.7) 100%),
-        url('luxcityfront.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
-}
+        .hero-banner-image {
+            width: 100%;
+            height: 240px; /* Height of your property showcase photo */
+            border-radius: 12px; /* Smooth rounded corners that stay perfectly intact */
+            border: 1px solid var(--border-color);
+            
+            /* Loads your image with an elegant dimming gradient overlay */
+            background: 
+                linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(18, 18, 18, 0.7) 100%),
+                url('luxcityfront.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+        }
 
-@media (min-width: 768px) {
-    .hero-banner-image {
-        height: 340px; /* Larger image showcase for desktop viewports */
-    }
-}
+        @media (min-width: 768px) {
+            .hero-banner-image {
+                height: 340px; /* Larger image showcase for desktop viewports */
+            }
+        }
+
         .luxcity-logo-img {
             width: auto;
-            height: 75px; /* Adjust this number to make your logo larger or smaller */
+            height: 75px;
             margin-bottom: 15px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)); /* Adds an elegant premium drop-shadow */
-       }
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+        }
 
-       /* UNIFORM PREMIUM BRAND FONT AND GOLD COLOR STYLING */
+        /* UNIFORM PREMIUM BRAND FONT AND GOLD COLOR STYLING */
         .brand-title-main {
-            font-family: 'Inter', sans-serif; /* Changes the entire line to the same modern Inter font */
+            font-family: 'Inter', sans-serif;
             font-size: 2.1rem;
             font-weight: 700;
             letter-spacing: 0.5px;
-            color: var(--primary-gold); /* Forces the whole title to share the exact same gold color */
-            text-shadow: 0 3px 14px rgba(0, 0, 0, 0.95); /* High-contrast shadow for premium legibility */
+            color: var(--primary-gold);
+            text-shadow: 0 3px 14px rgba(0, 0, 0, 0.95);
             margin-top: 5px;
         }
 
-    /* Responsive fix for smaller mobile screens */
-    @media (max-width: 480px) {
-        .brand-title-main {
-            font-size: 1.6rem;
+        @media (max-width: 480px) {
+            .brand-title-main {
+                font-size: 1.6rem;
+            }
         }
-    }
+
+        /* Inner Content Padding Container */
+        .main-content-body {
+            padding: 0 20px 25px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
         /* Hotel Info Section */
         .hotel-info-section {
@@ -325,7 +327,7 @@
 
         /* Facility Slider Section styling */
         .facility-showcase {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             overflow: hidden;
             width: 100%;
         }
@@ -493,15 +495,16 @@
     <div class="landing-container" id="mainAppCard">
         
         <div class="brand-header-clean">
-    <img src="logo.png" alt="Luxcity Logo" class="luxcity-logo-img">
-    <header>
-        <h1 class="brand-title-main">Luxcity Hotel & Apartment</h1>
-    </header>
-</div>
+            <img src="logo.png" alt="Luxcity Logo" class="luxcity-logo-img">
+            <header>
+                <h1 class="brand-title-main">Luxcity Hotel & Apartment</h1>
+            </header>
+        </div>
 
-<div class="hero-banner-container">
-    <div class="hero-banner-image"></div>
-</div>
+        <div class="hero-banner-container">
+            <div class="hero-banner-image"></div>
+        </div>
+
         <div class="main-content-body">
 
             <section class="hotel-info-section">
@@ -530,24 +533,23 @@
             <div class="cta-container">
                <a href="https://booking.luxcity.com/#/engine?hotelCode=LuxCity" target="_blank" class="btn btn-booking" id="bookingBtn" onclick="trackClick('booking')">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        Book Instantly Online
+                Book Instantly Online
                </a>
               <a href="https://t.me/luxcityhotelandapartment" target="_blank" class="btn btn-telegram" id ="telegramBtn" onclick="trackClick('telegram')">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.13 2.82a1.61 1.61 0 0 0-1.5-.16L2.33 9.42a1.59 1.59 0 0 0-.14 2.94L7.9 14.7l2.12 6.51a1.6 1.6 0 0 0 2.45.86l3.91-3.23 4.2 3.12a1.6 1.6 0 0 0 2.44-.94l3.61-16.7a1.61 1.61 0 0 0-1.5-1.5z"></path><line x1="7.9" y1="14.7" x2="12" y2="11"></line></svg>
-        Chat with Sales (Telegram)
+                Chat with Sales (Telegram)
                </a>
             </div>
 
             <section class="features-section">
                 <h3 id="featureTitle">Studio Queen Features</h3>
-                <div class="features-grid" id="featureGrid">
-                    </div>
+                <div class="features-grid" id="featureGrid"></div>
             </section>
 
             <section class="facility-showcase">
                 <div class="facility-showcase-title">Explore Our Premium Facilities</div>
                 <div class="facility-website-promo">
-                    Discover more facilites & services on our website: <a href="https://luxcity.com" target="_blank">luxcity.com</a>
+                    Discover more facilities & services on our website: <a href="https://luxcity.com" target="_blank">luxcity.com</a>
                 </div>
 
                 <div class="carousel-viewport">
@@ -618,10 +620,9 @@
         // BACKEND CONFIGURE CONTROL SWITCHES
         // ==========================================
         const backendConfig = {
-            showVideoPanel: true // Set to 'false' to hide the media element from the layout
+            showVideoPanel: true 
         };
 
-        // FIXED: Replaced duplicate string keys with explicit unique identifier slugs
         const roomData = {
             "studio-queen": {
                 video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971958/Luxcity_-_Studio_Queen_p9ja4y.mp4",
@@ -650,58 +651,47 @@
         };
 
         function updatePageData() {
-    const selectedKey = document.getElementById('roomSelect').value;
-    const data = roomData[selectedKey];
+            const selectedKey = document.getElementById('roomSelect').value;
+            const data = roomData[selectedKey];
 
-    if (!data) return;
+            if (!data) return;
 
-    // 1. Target the player elements
-    const video = document.getElementById('roomVideo');
-    const source = document.getElementById('videoSource');
-    
-    // 2. Pause any video currently playing and instantly switch the thumbnail poster
-    video.pause();
-    video.setAttribute('poster', data.thumbnail);
-    
-    // 3. Clear out the old video source so the player resets cleanly to the thumbnail
-    source.src = "";
-    video.load();
+            const video = document.getElementById('roomVideo');
+            const source = document.getElementById('videoSource');
+            
+            video.pause();
+            video.setAttribute('poster', data.thumbnail);
+            
+            source.src = "";
+            video.load();
 
-    // 4. DELAY LOGIC: Wait exactly 3 seconds (3000 milliseconds) before streaming the video
-    // Change 3000 to 2000 for 2 seconds, or 4000 for 4 seconds depending on your preference.
-    setTimeout(() => {
-        source.src = data.video;
-        video.load();
-        
-        // Play the video silently in the background
-        video.play().catch(err => console.log("Autoplay caught safely or room changed before delay ended."));
-    }, 3000); 
+            setTimeout(() => {
+                source.src = data.video;
+                video.load();
+                video.play().catch(err => console.log("Autoplay handled cleanly."));
+            }, 3000); 
 
-    // 5. Update the button's booking link dynamically
-    const bookingBtn = document.getElementById('bookingBtn');
-    if (bookingBtn && data.bookingUrl) {
-        bookingBtn.href = data.bookingUrl;
-    }
+            const bookingBtn = document.getElementById('bookingBtn');
+            if (bookingBtn && data.bookingUrl) {
+                bookingBtn.href = data.bookingUrl;
+            }
 
-    // 6. Update Feature Card Header Text
-    document.getElementById('featureTitle').innerText = data.title;
+            document.getElementById('featureTitle').innerText = data.title;
 
-    // 7. Update Features Grid Items List
-    const grid = document.getElementById('featureGrid');
-    grid.innerHTML = "";
-    
-    data.features.forEach(feature => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'feature-item';
-        itemDiv.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span>${feature}</span>
-        `;
-        grid.appendChild(itemDiv);
-    });
-}
+            const grid = document.getElementById('featureGrid');
+            grid.innerHTML = "";
+            
+            data.features.forEach(feature => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'feature-item';
+                itemDiv.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>${feature}</span>
+                `;
+                grid.appendChild(itemDiv);
+            });
+        }
 
-        // System Initialization Run
         window.onload = function() {
             const mediaBlock = document.getElementById('mediaPlayerBlock');
             if (!backendConfig.showVideoPanel) {
@@ -712,7 +702,6 @@
 
             updatePageData();
 
-            // Viewport auto-focus alignment logic
             setTimeout(() => {
                 document.getElementById('mainAppCard').scrollIntoView({
                     behavior: 'smooth',
@@ -721,7 +710,6 @@
             }, 300);
         };
 
-        // Automatic Infinite Loop Slider Carousel for Amenities Track
         let currentCarouselIndex = 0;
         const track = document.getElementById('facilityTrack');
         
@@ -751,23 +739,17 @@
             currentCarouselIndex = 0;
             track.style.transform = 'translateX(0px)';
         });
-         // ==========================================
-// BUTTON CLICK TRACKING BACKEND ENGINE
-// ==========================================
-function trackClick(buttonName) {
-    // A unique namespace identifier for your specific website property
-    const namespace = "luxcity_landing_2026"; 
-    
-    // Fires a background log request directly to the API server
-    const trackingUrl = `https://api.countapi.xyz/hit/${namespace}/${buttonName}`;
-    
-    // navigator.sendBeacon ensures the data logs even if the page redirects quickly
-    if (navigator.sendBeacon) {
-        navigator.sendBeacon(trackingUrl);
-    } else {
-        fetch(trackingUrl);
-    }
-}
+
+        function trackClick(buttonName) {
+            const namespace = "luxcity_landing_2026"; 
+            const trackingUrl = `https://api.countapi.xyz/hit/${namespace}/${buttonName}`;
+            
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(trackingUrl);
+            } else {
+                fetch(trackingUrl);
+            }
+        }
     </script>
 </body>
 </html>
