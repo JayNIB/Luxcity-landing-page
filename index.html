@@ -18,31 +18,30 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
-        html, body { background-color: var(--dark-bg); color: var(--text-light); margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
+        html, body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; 
+        }
 
-        .landing-container { width: 100%; max-width: 100%; background: var(--dark-bg); border-radius: 0; box-shadow: none; border: none; }
+        .landing-container { width: 100%; max-width: 100%; background: var(--dark-bg); }
         .content-wrapper { width: 100%; max-width: 850px; margin: 0 auto; }
+
         .hero-banner-container { position: relative; width: 100%; height: 300px; }
         @media (min-width: 768px) { .hero-banner-container { height: 450px; } }
-        .hero-banner-image { width: 100%; height: 100%; background: linear-gradient(to top, var(--dark-bg) 0%, rgba(18, 18, 18, 0.4) 40%, rgba(18, 18, 18, 0) 100%), url('luxcityfront.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; }
+        .hero-banner-image { width: 100%; height: 100%; background: linear-gradient(to top, var(--dark-bg) 0%, rgba(18, 18, 18, 0.4) 40%, rgba(18, 18, 18, 0) 100%), url('luxcityfront.jpg'); background-size: cover; background-position: center center; }
+
         .brand-header-overlay { position: absolute; bottom: 30px; left: 0; width: 100%; padding: 0 20px; text-align: center; z-index: 2; }
         .brand-logo { max-width: 120px; width: 100%; height: auto; margin: 0 auto 15px auto; display: block; }
-        .brand-title-main { font-size: 2.2rem; font-weight: 700; letter-spacing: 0.5px; color: var(--primary-gold); text-shadow: 0 3px 15px rgba(0, 0, 0, 0.9); }
+        .brand-title-main { font-size: 2.2rem; font-weight: 700; color: var(--primary-gold); text-shadow: 0 3px 15px rgba(0, 0, 0, 0.9); }
         @media (max-width: 480px) { .brand-title-main { font-size: 1.6rem; } .brand-logo { max-width: 90px; } }
+
+        /* Fullscreen Modal Styles */
+        .video-fullwidth-wrapper { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background-color: #000000; z-index: 10; transition: all 0.3s ease; }
         
-        .content-top-block { padding: 20px 20px; width: 100%; }
-        .content-bottom-block { padding: 30px 20px 50px 20px; width: 100%; }
-        .hotel-info-section { background: var(--card-bg); border-left: 3px solid var(--primary-gold); padding: 20px; border-radius: 4px 8px 8px 4px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .selection-box { margin-bottom: 20px; width: 100%; }
-        .selection-box label { display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--primary-gold); margin-bottom: 8px; font-weight: 600; }
-        .punchline { font-size: 1.2rem; font-weight: 700; color: #ffffff; margin-bottom: 15px; letter-spacing: 0.5px; line-height: 1.4; }
-        .punchline span { color: var(--primary-gold); }
-        .room-dropdown { width: 100%; padding: 16px; background-color: var(--card-bg); color: var(--text-light); border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c5a880' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 15px center; background-size: 18px; }
-        
-        /* Video Player Wrapper Styles */
-        .video-fullwidth-wrapper { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background-color: #000000; cursor: pointer; transition: all 0.3s ease; }
-        
-        /* Mobile Pop-up Logic */
         .video-fullwidth-wrapper.fullscreen-mode {
             position: fixed;
             top: 0;
@@ -56,34 +55,22 @@
             justify-content: center;
             background-color: rgba(0, 0, 0, 0.95);
         }
-        .video-fullwidth-wrapper.fullscreen-mode .video-container { width: 100%; max-width: 95%; }
 
         .video-container { width: 100%; max-width: 1400px; margin: 0 auto; aspect-ratio: 16 / 9; background-color: #000000; position: relative; }
-        .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-fullwidth-wrapper.fullscreen-mode .video-container { max-width: 90%; aspect-ratio: 16/9; }
+        .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
 
-        .cta-container { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; width: 100%; }
-        @media (min-width: 576px) { .cta-container { flex-direction: row; } }
-        .btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; padding: 18px; font-size: 1rem; font-weight: 700; text-decoration: none; border-radius: 8px; transition: transform 0.4s ease, filter 0.2s ease; text-align: center; white-space: nowrap; }
+        /* ... [Existing Styles for other sections] ... */
+        .content-top-block { padding: 20px 20px; width: 100%; }
+        .content-bottom-block { padding: 30px 20px 50px 20px; width: 100%; }
+        .hotel-info-section { background: var(--card-bg); border-left: 3px solid var(--primary-gold); padding: 20px; border-radius: 4px 8px 8px 4px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); }
+        .room-dropdown { width: 100%; padding: 16px; background-color: var(--card-bg); color: var(--text-light); border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 18px; font-size: 1rem; font-weight: 700; text-decoration: none; border-radius: 8px; margin-bottom: 10px; width: 100%; }
         .btn-booking { background-color: var(--primary-gold); color: #121212; }
         .btn-telegram { background-color: var(--telegram-color); color: #ffffff; }
-        .btn svg { margin-right: 8px; width: 20px; height: 20px; }
-        
         .features-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
-        .feature-item { display: flex; align-items: center; font-size: 0.95rem; margin-bottom: 10px; }
-        .feature-item svg { width: 18px; height: 18px; margin-right: 10px; color: var(--primary-gold); }
-        
-        .facility-showcase { margin-bottom: 30px; overflow: hidden; width: 100%; }
-        .facility-showcase-title { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--primary-gold); margin-bottom: 10px; text-align: center; }
-        .facility-website-promo { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 25px; }
-        .carousel-viewport { overflow: hidden; width: 100%; border-radius: 16px; padding: 5px 0; }
-        .facility-track { display: flex; gap: 16px; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
-        .facility-card { flex: 0 0 calc(33.333% - 11px); aspect-ratio: 1 / 1; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .facility-icon { width: 32px; height: 32px; stroke: var(--primary-gold); fill: none; margin-bottom: 12px; }
-        @media (max-width: 600px) { .facility-card { flex: 0 0 100%; } }
-        
-        .hotel-footer { border-top: 1px solid var(--border-color); padding-top: 30px; margin-top: 20px; width: 100%; }
-        .footer-grid { display: grid; gap: 20px; font-size: 0.95rem; color: var(--text-muted); }
-        .social-links { display: flex; gap: 25px; justify-content: center; margin-top: 15px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+        .feature-item { display: flex; align-items: center; font-size: 0.95rem; }
     </style>
 </head>
 <body>
@@ -92,7 +79,7 @@
         <div class="hero-banner-container">
             <div class="hero-banner-image"></div>
             <div class="brand-header-overlay">
-                <img src="logo-Luxcity-2024.png" alt="Luxcity Logo" class="brand-logo">
+                <img src="logo.png" alt="Luxcity Logo" class="brand-logo">
                 <h1 class="brand-title-main">Luxcity Hotel & Apartment</h1>
             </div>
         </div>
@@ -100,13 +87,9 @@
         <div class="content-wrapper">
             <div class="content-top-block">
                 <section class="hotel-info-section">
-                    <strong>Welcome to Luxcity Hotel & Apartment</strong> – Phnom Penh's premier destination.
+                    <strong>Welcome to Luxcity Hotel & Apartment</strong> – Phnom Penh's premier destination for luxury accommodation and extended stays.
                 </section>
-
                 <div class="selection-box">
-                    <label for="roomSelect">Choose a Room Style</label>
-                    <div class="punchline">See it. Love it. <span>Secure it instantly.</span></div>
-                    
                     <select id="roomSelect" class="room-dropdown" onchange="updatePageData()">
                         <option value="studio-queen">Studio Queen</option>
                         <option value="studio-twin">Studio Twin</option>
@@ -119,25 +102,18 @@
 
         <div class="video-fullwidth-wrapper" id="mediaPlayerBlock">
             <div class="video-container">
-                <video id="roomVideo" muted loop playsinline poster="thumbnails/deluxe-poster.jpg">
+                <video id="roomVideo" autoplay muted loop playsinline poster="thumbnails/deluxe-poster.jpg">
                     <source id="videoSource" src="" type="video/mp4">
                 </video>
             </div>
         </div>
 
-        <div class="content-wrapper">
-            <div class="content-bottom-block">
-                <section class="features-section">
-                    <h3 id="featureTitle">Studio Queen Features</h3>
-                    <div class="features-grid" id="featureGrid"></div>
-                </section>
-                </div>
         </div>
-    </div>
 
     <script>
+        // Existing roomData object remains here...
         const roomData = { /* ... your data ... */ };
-        let playbackTimer; // Timer for the delay
+        let playTimeout;
 
         function updatePageData() {
             const selectedKey = document.getElementById('roomSelect').value;
@@ -147,41 +123,29 @@
             const video = document.getElementById('roomVideo');
             const source = document.getElementById('videoSource');
             
-            // 1. Reset everything
-            clearTimeout(playbackTimer);
-            video.pause();
+            // Clear any pending play commands
+            clearTimeout(playTimeout);
             
-            // 2. Load new data
+            video.pause();
             video.setAttribute('poster', data.thumbnail);
             source.src = data.video;
             video.load();
 
-            // 3. Delay playback by 2 seconds
-            playbackTimer = setTimeout(() => {
-                video.play().catch(err => console.log("Autoplay paused."));
+            // Delay playback by 2 seconds
+            playTimeout = setTimeout(() => {
+                video.play().catch(err => console.log("Autoplay blocked, user interaction required."));
             }, 2000); 
-
-            // Update UI
-            document.getElementById('featureTitle').innerText = data.title;
-            const grid = document.getElementById('featureGrid');
-            grid.innerHTML = "";
-            data.features.forEach(feature => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'feature-item';
-                itemDiv.innerHTML = `<span>${feature}</span>`;
-                grid.appendChild(itemDiv);
-            });
+            
+            // ... (rest of your logic for feature grid updating) ...
         }
 
-        // Mobile Fullscreen Toggle Logic
+        // Mobile Fullscreen Toggle
         const wrapper = document.getElementById('mediaPlayerBlock');
         wrapper.addEventListener('click', () => {
             wrapper.classList.toggle('fullscreen-mode');
         });
 
         window.onload = updatePageData;
-        
-        // ... (your existing carousel and utility scripts) ...
     <script>
         const roomData = {
             "studio-queen": {
