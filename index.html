@@ -47,10 +47,12 @@
             width: 100%;
             max-width: 800px;
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 16px; /* Your beautiful rounded corners */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid var(--border-color);
-            overflow: hidden;
+    
+        /* THE FIX: Automatically masks and clips the header image to match the 16px rounded corners */
+            overflow: hidden; 
         }
 
         /* Inner Header Background Wallpaper with Gradient Feature */
