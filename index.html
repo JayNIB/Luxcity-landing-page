@@ -629,35 +629,56 @@
         };
 
         function updatePageData() {
-            const selectedKey = document.getElementById('roomSelect').value;
-            const data = roomData[selectedKey];
+    const selectedKey = document.getElementById('roomSelect').value;
+    const data = roomData[selectedKey];
 
-            if (!data) return;
+    if (!data) return;
 
-            const video = document.getElementById('roomVideo');
-            const source = document.getElementById('videoSource');
-            
-            source.src = data.video;
-            video.setAttribute('poster', data.thumbnail);
-            
-            video.load();
-            video.play().catch(err => console.log("Autoplay caught safely."));
+    // 1. Target the player elements
+    const video = document.getElementById('roomVideo');
+    const source = document.getElementById('videoSource');
+    
+    // 2. Pause any video currently playing and instantly switch the thumbnail poster
+    video.pause();
+    video.setAttribute('poster', data.thumbnail);
+    
+    // 3. Clear out the old video source so the player resets cleanly to the thumbnail
+    source.src = "";
+    video.load();
 
-            document.getElementById('featureTitle').innerText = data.title;
+    // 4. DELAY LOGIC: Wait exactly 3 seconds (3000 milliseconds) before streaming the video
+    // Change 3000 to 2000 for 2 seconds, or 4000 for 4 seconds depending on your preference.
+    setTimeout(() => {
+        source.src = data.video;
+        video.load();
+        
+        // Play the video silently in the background
+        video.play().catch(err => console.log("Autoplay caught safely or room changed before delay ended."));
+    }, 3000); 
 
-            const grid = document.getElementById('featureGrid');
-            grid.innerHTML = "";
-            
-            data.features.forEach(feature => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'feature-item';
-                itemDiv.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>${feature}</span>
-                `;
-                grid.appendChild(itemDiv);
-            });
-        }
+    // 5. Update the button's booking link dynamically
+    const bookingBtn = document.getElementById('bookingBtn');
+    if (bookingBtn && data.bookingUrl) {
+        bookingBtn.href = data.bookingUrl;
+    }
+
+    // 6. Update Feature Card Header Text
+    document.getElementById('featureTitle').innerText = data.title;
+
+    // 7. Update Features Grid Items List
+    const grid = document.getElementById('featureGrid');
+    grid.innerHTML = "";
+    
+    data.features.forEach(feature => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'feature-item';
+        itemDiv.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>${feature}</span>
+        `;
+        grid.appendChild(itemDiv);
+    });
+}
 
         // System Initialization Run
         window.onload = function() {
