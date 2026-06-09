@@ -60,17 +60,13 @@
         .video-fullwidth-wrapper.fullscreen-mode .video-container { max-width: 90%; aspect-ratio: 16/9; }
         .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
 
-        /* ... [Existing Styles for other sections] ... */
         .content-top-block { padding: 20px 20px; width: 100%; }
         .content-bottom-block { padding: 30px 20px 50px 20px; width: 100%; }
         .hotel-info-section { background: var(--card-bg); border-left: 3px solid var(--primary-gold); padding: 20px; border-radius: 4px 8px 8px 4px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); }
         .room-dropdown { width: 100%; padding: 16px; background-color: var(--card-bg); color: var(--text-light); border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; cursor: pointer; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 18px; font-size: 1rem; font-weight: 700; text-decoration: none; border-radius: 8px; margin-bottom: 10px; width: 100%; }
-        .btn-booking { background-color: var(--primary-gold); color: #121212; }
-        .btn-telegram { background-color: var(--telegram-color); color: #ffffff; }
         .features-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-        .feature-item { display: flex; align-items: center; font-size: 0.95rem; }
+        .feature-item { display: flex; align-items: center; font-size: 0.95rem; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -102,14 +98,93 @@
 
         <div class="video-fullwidth-wrapper" id="mediaPlayerBlock">
             <div class="video-container">
-                <video id="roomVideo" autoplay muted loop playsinline poster="thumbnails/deluxe-poster.jpg">
+                <video id="roomVideo" muted loop playsinline poster="thumbnails/deluxe-poster.jpg">
                     <source id="videoSource" src="" type="video/mp4">
                 </video>
             </div>
         </div>
 
+        <div class="content-wrapper">
+            <div class="content-bottom-block">
+                <section class="features-section">
+                    <h3 id="featureTitle">Features</h3>
+                    <div class="features-grid" id="featureGrid"></div>
+                </section>
+            </div>
         </div>
+    </div>
 
+    <script>
+        const roomData = {
+            "studio-queen": {
+                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971958/Luxcity_-_Studio_Queen_p9ja4y.mp4",
+                thumbnail: "thumbnails/Studio Queen.jpg",
+                title: "Studio Queen Features",
+                features: ["32 sqm Living Space", "1 King-Sized Bed", "City View Balcony", "Smart TV & High-Speed Wi-Fi"]
+            },
+            "studio-twin": {
+                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971940/Luxcity_-_Studio_Twin_uq7hgk.mp4",
+                thumbnail: "thumbnails/Studio Twin.jpg",
+                title: "Studio Twin Features",
+                features: ["36 sqm Space", "2 Comfortable Twin Beds", "Modern Ensuite Bathroom", "In-room Safe Box"]
+            },
+            "deluxe-classic": {
+                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780973052/Luxcity_-_Deluxe_Classic_tn9isf.mp4",
+                thumbnail: "thumbnails/Deluxe Classic.jpg",
+                title: "Deluxe Classic Features",
+                features: ["55 sqm Premium Layout", "Separate Living & Bedroom", "Fully Equipped Kitchenette", "Washing Machine In-Unit"]
+            },
+            "deluxe-premium": {
+                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971938/Luxcity_-_Deluxe_Premium_mi3bjg.mp4", 
+                thumbnail: "thumbnails/Deluxe Premium.jpg",
+                title: "Deluxe Premium Features",
+                features: ["85 sqm Massive Premium Layout", "1 Master King + 1 Queen Bed", "2 Bathrooms with Bathtub", "Private Washer & Dryer"]
+            }
+        };
+
+        let playTimeout;
+
+        function updatePageData() {
+            const selectedKey = document.getElementById('roomSelect').value;
+            const data = roomData[selectedKey];
+            if (!data) return;
+
+            const video = document.getElementById('roomVideo');
+            const source = document.getElementById('videoSource');
+            
+            // Clear existing playback delay
+            clearTimeout(playTimeout);
+            
+            video.pause();
+            video.setAttribute('poster', data.thumbnail);
+            source.src = data.video;
+            video.load();
+
+            // Set 2-second delay
+            playTimeout = setTimeout(() => {
+                video.play().catch(err => console.log("Autoplay blocked."));
+            }, 2000); 
+            
+            // Update UI
+            document.getElementById('featureTitle').innerText = data.title;
+            const grid = document.getElementById('featureGrid');
+            grid.innerHTML = "";
+            
+            data.features.forEach(feature => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'feature-item';
+                itemDiv.innerHTML = `<span>${feature}</span>`;
+                grid.appendChild(itemDiv);
+            });
+        }
+
+        // Mobile Fullscreen Toggle
+        const wrapper = document.getElementById('mediaPlayerBlock');
+        wrapper.addEventListener('click', () => {
+            wrapper.classList.toggle('fullscreen-mode');
+        });
+
+        window.onload = updatePageData;
     <script>
         // Existing roomData object remains here...
         const roomData = { /* ... your data ... */ };
