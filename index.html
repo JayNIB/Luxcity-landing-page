@@ -24,7 +24,7 @@
         }
 
         body {
-            background-color: var(--dark-bg);
+            background-color: var(--dark-bg); /* Returns outer background to clean solid dark color */
             color: var(--text-light);
             display: flex;
             flex-direction: column;
@@ -33,6 +33,8 @@
             min-height: 100vh;
             padding: 20px 15px;
         }
+
+        /* Remove or delete any old 'body::before' blocks completely if they are still in your file */
 
         @media (min-width: 768px) {
             body {
@@ -65,7 +67,7 @@
             /* Blends your uploaded header asset down smoothly into your card's dark grey layout color */
             background: 
                 linear-gradient(to bottom, rgba(30, 30, 30, 0.2) 0%, rgba(30, 30, 30, 0.6) 60%, var(--card-bg) 100%),
-                url('Untitled design (8).jpg');
+                url('luxcityfront.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
