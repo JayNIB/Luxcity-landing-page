@@ -56,23 +56,29 @@
         }
 
         /* Inner Header Background Wallpaper with Gradient Feature */
+        /* Inner Header Background Wallpaper with Card Feature */
         .brand-header-bg-wrapper {
             position: relative;
             width: 100%;
-            padding: 55px 20px 45px 20px;
+            padding: 65px 20px 55px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            
-            /* Blends your uploaded header asset down smoothly into your card's dark grey layout color */
-            background: 
-                linear-gradient(to bottom, rgba(30, 30, 30, 0.2) 0%, rgba(30, 30, 30, 0.6) 60%, var(--card-bg) 100%),
-                url('luxcityfront.jpg');
+    
+        background: 
+            linear-gradient(to bottom, rgba(30, 30, 30, 0.1) 0%, rgba(30, 30, 30, 0.5) 60%, var(--card-bg) 100%),
+        url('luxcityfront.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
+    
+        border-bottom: 1px solid var(--border-color);
+
+        /* THE FIX: Explicitly rounds the image wrapper's top corners to tuck neatly inside the border */
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
         /* Content Layout Body below the header image */
