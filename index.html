@@ -125,6 +125,11 @@
         .btn svg { margin-right: 8px; width: 20px; height: 20px; flex-shrink: 0; }
         .features-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0; padding: 24px; margin-bottom: 40px; width: 100%; }
         .features-section h3 { font-size: 1.2rem; color: var(--primary-gold); margin-bottom: 15px; font-weight: 600; }
+        /* Layout: Vertical on mobile, Side-by-side on desktop */
+        .features-wrapper {display: flex; flex-direction: column; /* Stacked by default */ gap: 20px; width: 100%; }
+        @media (min-width: 768px) {.features-wrapper { flex-direction: row; /* Side-by-side on desktop */ gap: 40px;} .feature-col {flex: 1; /* Makes columns equal width */}}
+        /* Fluid Text: Auto-scaling size */
+        .feature-col p {font-size: clamp(0.9rem, 0.8rem + 0.5vw, 1.1rem);line-height: 1.6; }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
         .feature-item { display: flex; align-items: center; font-size: 0.95rem; color: var(--text-light); }
         .feature-item svg { width: 18px; height: 18px; margin-right: 10px; color: var(--primary-gold); flex-shrink: 0; }
@@ -220,7 +225,14 @@
 
                 <section class="features-section">
                     <h3 id="featureTitle">Studio Queen Features</h3>
-                    <div class="features-grid" id="featureGrid"></div>
+                    <div class="features-wrapper">
+                        <div class="feature-col">
+                            <p>Insert your first set of features or descriptive text here.</p>
+                        </div>
+                        <div class="feature-col">
+                            <p>Insert your second set of features or descriptive text here.</p>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="facility-showcase">
