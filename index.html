@@ -235,57 +235,76 @@
             },
             "studio-twin": {
                 video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971940/Luxcity_-_Studio_Twin_uq7hgk.mp4",
+                thumbnail: "thumbnails/studio-queen.jpg",
                 title: "Studio Twin Features",
                 features: ["Expansive Space: 39m²–53m² layout for maximum comfort ", "Flexible Comfort: Twin-bed setup perfect for shared or separate stays", "Relaxation: Private rain shower in the bathroom", "Guest Perks: Free access to our rooftop pool and fitness center","Connectivity: High-speed Wi-Fi", "Work-Ready: Dedicated, multi-functional desk"]
             },
             "deluxe-classic": {
                 video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780973052/Luxcity_-_Deluxe_Classic_tn9isf.mp4",
+                thumbnail: "thumbnails/deluxe-classic.jpg",
                 title: "Deluxe Classic Features",
                 features: ["Spacious Sanctuary: An expansive 50m²–68m² of refined living space", "King-Sized Luxury: Unwind in ultimate comfort with our premium king bed", "Spa-Inspired: Refresh in your private, separate rain shower", "Guest Perks: Complimentary access to our rooftop pool and fitness center" ,"Connectivity: High-speed Wi-Fi" ,"Work-Ready: A dedicated, multi-functional desk for seamless productivity"]
             },
             "deluxe-premium": {
-                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971938/Luxcity_-_Deluxe_Premium_mi3bjg.mp4", 
+                video: "https://res.cloudinary.com/dboyyhzr2/video/upload/v1780971938/Luxcity_-_Deluxe_Premium_mi3bjg.mp4",
+                thumbnail: "thumbnails/deluxe-premium.jpg", 
                 title: "Deluxe Premium Features",
                 features: ["Ultimate Space: A sprawling 75m² layout designed for an elevated stay", "King-Sized Luxury: Drift away on our premium king bed", "Spa-Inspired: Unwind in your private, separate rain shower", "Resort Perks: Complimentary access to our rooftop pool and fitness center" ,"Seamless Connection: High-speed Wi-Fi" ,"Work-Ready: A dedicated, multi-functional workspace for undisturbed productivity"]
             }
         };
     
+        // Add this variable at the very top of your <script> section (outside the function)
+        let playTimeout; 
+
         function updatePageData() {
             const selectedKey = document.getElementById('roomSelect').value;
             const data = roomData[selectedKey];
-            
+    
             if (!data) return;
 
-            const video = document.getElementById('roomVideo');
-            const source = document.getElementById('videoSource');
-            
-            source.src = data.video;
-            video.load();
-            video.muted = true; 
-            video.play().catch(err => console.log("Autoplay blocked, user interaction required."));
+            // Clear any existing delay so the video doesn't play unexpectedly
+            if (playTimeout) clearTimeout(playTimeout);
 
-            const col1 = document.getElementById('col1');
-            const col2 = document.getElementById('col2');
-            const featureTitle = document.getElementById('featureTitle');
+        const video = document.getElementById('roomVideo');
+        const source = document.getElementById('videoSource');
+    
+        // 1. Update the poster (thumbnail) and source
+        video.poster = data.thumbnail; 
+        source.src = data.video;
+    
+        // 2. Load the new video and pause it immediately to show the poster
+        video.load(); 
+        video.pause();
 
-            col1.innerHTML = '';
-            col2.innerHTML = '';
-            featureTitle.innerText = data.title;
+        // 3. Set the 2-second delay for playing
+        playTimeout = setTimeout(() => {
+        video.muted = true; 
+        video.play().catch(err => console.log("Autoplay blocked."));
+    }, 2000); // 2000 milliseconds = 2 seconds
 
-            const mid = Math.ceil(data.features.length / 2);
-            const firstHalf = data.features.slice(0, mid);
-            const secondHalf = data.features.slice(mid);
+        // --- FEATURE COLUMN LOGIC (Kept same as before) ---
+        const col1 = document.getElementById('col1');
+        const col2 = document.getElementById('col2');
+        const featureTitle = document.getElementById('featureTitle');
 
-            const createItem = (text) => {
-                const div = document.createElement('div');
-                div.className = 'feature-item';
-                div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>${text}</span>`;
-                return div;
-            };
+        col1.innerHTML = '';
+        col2.innerHTML = '';
+        featureTitle.innerText = data.title;
 
-            firstHalf.forEach(feat => col1.appendChild(createItem(feat)));
-            secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
-        }
+        const mid = Math.ceil(data.features.length / 2);
+        const firstHalf = data.features.slice(0, mid);
+        const secondHalf = data.features.slice(mid);
+
+        const createItem = (text) => {
+            const div = document.createElement('div');
+            div.className = 'feature-item';
+            div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>${text}</span>`;
+            return div;
+        };
+
+        firstHalf.forEach(feat => col1.appendChild(createItem(feat)));
+        secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
+    }
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', updatePageData);
