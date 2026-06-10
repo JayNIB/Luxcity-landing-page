@@ -151,6 +151,18 @@
         .footer-item a { color: var(--text-light); text-decoration: none; }
         .footer-item a:hover { color: var(--primary-gold); }
         .social-links { grid-column: 1 / -1; display: flex; gap: 25px; justify-content: center; margin-top: 15px; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 25px; width: 100%; }
+        /* Specifically force the hero area to have no margins at the top */
+        .hero-banner-container, 
+        .hero-banner-image, 
+        .brand-header-overlay {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        /* Ensure headings inside the hero don't create top gaps */
+        .brand-title-main {
+            margin-top: 0 !important;
+        }
     </style>
 </head>
 <body>
