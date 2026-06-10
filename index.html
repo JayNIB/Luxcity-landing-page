@@ -332,7 +332,7 @@
                 features: ["85 sqm Massive Premium Layout", "1 Master King + 1 Queen Bed", "2 Bathrooms with Bathtub", "Private Washer & Dryer"]
             }
         };
-
+    
         function updatePageData() {
             const selectedKey = document.getElementById('roomSelect').value;
             const data = roomData[selectedKey];
@@ -347,6 +347,16 @@
             video.load();
             video.play().catch(err => console.log("Autoplay handled cleanly."));
 
+            const featureGrid = document.getElementById('featureGrid');
+            featureGrid.innerHTML = '';
+            
+            if (data.features) {
+                data.features.forEach(feature => {
+                const div = document.createElement('div');
+                div.className = 'feature-item';
+                div.innerHTML = `<span>✓</span> ${feature}`;
+                featureGrid.appendChild(div);
+        });    
             document.getElementById('featureTitle').innerText = data.title;
             const grid = document.getElementById('featureGrid');
             grid.innerHTML = "";
