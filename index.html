@@ -336,32 +336,38 @@
         function updatePageData() {
     const selectedKey = document.getElementById('roomSelect').value;
     const data = roomData[selectedKey];
+    
+    // Safety check: if data doesn't exist, stop here
     if (!data) return;
 
-    // 1. Update Video
+    // --- VIDEO LOGIC ---
     const video = document.getElementById('roomVideo');
     const source = document.getElementById('videoSource');
-    video.pause();
-    video.setAttribute('poster', data.thumbnail);
+    
+    // Set new source and reload
     source.src = data.video;
     video.load();
-    video.play().catch(err => console.log("Autoplay handled."));
+    
+    // Autoplay logic: browsers allow autoplay ONLY if video is muted
+    video.muted = true; 
+    video.play().catch(err => console.log("Autoplay blocked, user interaction required."));
 
-    // 2. Update Title
-    document.getElementById('featureTitle').innerText = data.title;
-
-    // 3. Clear and Split Features into two columns
+    // --- FEATURE COLUMN LOGIC ---
     const col1 = document.getElementById('col1');
     const col2 = document.getElementById('col2');
+    const featureTitle = document.getElementById('featureTitle');
+
+    // Clear existing content
     col1.innerHTML = '';
     col2.innerHTML = '';
+    featureTitle.innerText = data.title;
 
-    // Split features array into two halves
+    // Split features into two columns
     const mid = Math.ceil(data.features.length / 2);
     const firstHalf = data.features.slice(0, mid);
     const secondHalf = data.features.slice(mid);
 
-    // Helper function to create items
+    // Function to generate the HTML item
     const createItem = (text) => {
         const div = document.createElement('div');
         div.className = 'feature-item';
@@ -369,11 +375,10 @@
         return div;
     };
 
-    // Populate columns
+    // Add to columns
     firstHalf.forEach(feat => col1.appendChild(createItem(feat)));
     secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
 }
-
         let currentCarouselIndex = 0;
         const track = document.getElementById('facilityTrack');
         
