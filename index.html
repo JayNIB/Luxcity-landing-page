@@ -25,20 +25,19 @@
 
         /* FIXED: Added overflow-x to html and body to prevent side white borders */
         html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
             background-color: var(--dark-bg);
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden; 
         }
 
         .landing-container { 
             width: 100%; 
             max-width: 100%; 
             background: var(--dark-bg);
-            /* Add this line below */
-            display: flow-root; 
+            /* The Fix: Force a layout boundary */
+            padding-top: 1px; 
+            margin-top: -1px;
         }
 
         .content-wrapper {
