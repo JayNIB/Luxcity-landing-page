@@ -334,53 +334,45 @@
         };
     
         function updatePageData() {
-            const selectedKey = document.getElementById('roomSelect').value;
-            const data = roomData[selectedKey];
-            if (!data) return;
+    const selectedKey = document.getElementById('roomSelect').value;
+    const data = roomData[selectedKey];
+    if (!data) return;
 
-            const video = document.getElementById('roomVideo');
-            const source = document.getElementById('videoSource');
-            
-            video.pause();
-            video.setAttribute('poster', data.thumbnail);
-            source.src = data.video;
-            video.load();
-            video.play().catch(err => console.log("Autoplay handled cleanly."));
+    // 1. Update Video
+    const video = document.getElementById('roomVideo');
+    const source = document.getElementById('videoSource');
+    video.pause();
+    video.setAttribute('poster', data.thumbnail);
+    source.src = data.video;
+    video.load();
+    video.play().catch(err => console.log("Autoplay handled."));
 
-            const featureGrid = document.getElementById('featureGrid');
-            featureGrid.innerHTML = '';
-            
-            if (data.features) {
-                data.features.forEach(feature => {
-                const div = document.createElement('div');
-                div.className = 'feature-item';
-                div.innerHTML = `<span>✓</span> ${feature}`;
-                featureGrid.appendChild(div);
-        });    
-            document.getElementById('featureTitle').innerText = data.title;
-            const grid = document.getElementById('featureGrid');
-            grid.innerHTML = "";
-            
-            data.features.forEach(feature => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'feature-item';
-                itemDiv.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>${feature}</span>
-                `;
-                grid.appendChild(itemDiv);
-            });
-        }
+    // 2. Update Title
+    document.getElementById('featureTitle').innerText = data.title;
 
-        window.onload = function() {
-            updatePageData();
-            setTimeout(() => {
-                document.getElementById('mainAppCard').scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 300);
-        };
+    // 3. Clear and Split Features into two columns
+    const col1 = document.getElementById('col1');
+    const col2 = document.getElementById('col2');
+    col1.innerHTML = '';
+    col2.innerHTML = '';
+
+    // Split features array into two halves
+    const mid = Math.ceil(data.features.length / 2);
+    const firstHalf = data.features.slice(0, mid);
+    const secondHalf = data.features.slice(mid);
+
+    // Helper function to create items
+    const createItem = (text) => {
+        const div = document.createElement('div');
+        div.className = 'feature-item';
+        div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>${text}</span>`;
+        return div;
+    };
+
+    // Populate columns
+    firstHalf.forEach(feat => col1.appendChild(createItem(feat)));
+    secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
+}
 
         let currentCarouselIndex = 0;
         const track = document.getElementById('facilityTrack');
