@@ -20,14 +20,23 @@
 
         html, body { margin: 0 !important; padding: 0 !important; border: 0 !important; background-color: var(--dark-bg); }
         
-        /* FIXED: Changed from horizontal (translateX) to vertical top-to-bottom (translateY) */
-        .slide-push { animation: slideDown 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; }
+        /* MODIFIED: Separate initial hidden state from the active animation state */
+        .slide-push { 
+            opacity: 0; 
+            transform: translateY(-30px);
+            will-change: transform, opacity;
+        }
+        
+        /* This class will now be applied dynamically on scroll */
+        .slide-push.animate-in { 
+            animation: slideDown 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
+        }
+
         @keyframes slideDown {
             0% { transform: translateY(-30px); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
         }
 
-        /* FIXED: Added missing Fade-In-Up animation rules for header components */
         .fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; }
         @keyframes fadeInUp {
             0% { transform: translateY(25px); opacity: 0; }
@@ -161,8 +170,8 @@
                 <section class="features-section">
                     <h3 id="featureTitle">Studio Queen Features</h3>
                     <div class="features-wrapper">
-                        <div class="feature-col" id="col1"></div>
-                        <div class="feature-col" id="col2"></div>
+                        <div class="feature-col slide-push" id="col1"></div>
+                        <div class="feature-col slide-push" id="col2"></div>
                     </div>
                 </section>
 
@@ -265,6 +274,7 @@
         };
 
         let playTimeout;
+        let isFeaturesSectionVisible = false; // Tracks if the user is looking at the feature section
 
         function updatePageData() {
             const selectedKey = document.getElementById('roomSelect').value;
@@ -285,13 +295,13 @@
                 video.play().catch(err => console.log("Autoplay blocked."));
             }, 2000); 
 
-            // --- FEATURE COLUMN LOGIC WITH UPDATED VERTICAL ANIMATION ---
             const col1 = document.getElementById('col1');
             const col2 = document.getElementById('col2');
             const featureTitle = document.getElementById('featureTitle');
 
-            if (col1) col1.classList.remove('slide-push');
-            if (col2) col2.classList.remove('slide-push');
+            // Strip out animation execution class cleanly
+            if (col1) col1.classList.remove('animate-in');
+            if (col2) col2.classList.remove('animate-in');
 
             if (col1) col1.innerHTML = '';
             if (col2) col2.innerHTML = '';
@@ -313,18 +323,50 @@
                 if (col2) secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
             }
 
-            // Reflow triggers to securely re-apply the newly defined top-to-bottom animation
-            if (col1) void col1.offsetWidth;
-            if (col2) void col2.offsetWidth;
-            
-            if (col1) col1.classList.add('slide-push');
-            if (col2) col2.classList.add('slide-push');
+            // MODIFIED: Only fire immediately if the card is currently visible in the viewport.
+            if (isFeaturesSectionVisible) {
+                if (col1) void col1.offsetWidth;
+                if (col2) void col2.offsetWidth;
+                if (col1) col1.classList.add('animate-in');
+                if (col2) col2.classList.add('animate-in');
+            }
         }
 
         if (document.readyState === 'loading') {
             window.addEventListener('DOMContentLoaded', updatePageData);
         } else {
             updatePageData();
+        }
+
+        // --- NEW: INTERSECTION OBSERVER FOR SCROLL RESPONSIVENESS ---
+        const scrollObserverOptions = {
+            root: null, 
+            rootMargin: '0px 0px -10% 0px', // Triggers slightly before completely entering view
+            threshold: 0.15 
+        };
+
+        const featureCardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const col1 = document.getElementById('col1');
+                const col2 = document.getElementById('col2');
+
+                if (entry.isIntersecting) {
+                    isFeaturesSectionVisible = true;
+                    if (col1) col1.classList.add('animate-in');
+                    if (col2) col2.classList.add('animate-in');
+                } else {
+                    isFeaturesSectionVisible = false;
+                    // Optional: Removes the class when scrolled out so it re-animates smoothly next time
+                    if (col1) col1.classList.remove('animate-in');
+                    if (col2) col2.classList.remove('animate-in');
+                }
+            });
+        }, scrollObserverOptions);
+
+        // Bind observer to the main parent card element
+        const TargetFeaturesCard = document.querySelector('.features-section');
+        if (TargetFeaturesCard) {
+            featureCardObserver.observe(TargetFeaturesCard);
         }
 
         // --- CAROUSEL LOGIC ---
