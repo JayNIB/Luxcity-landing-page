@@ -20,11 +20,18 @@
 
         html, body { margin: 0 !important; padding: 0 !important; border: 0 !important; background-color: var(--dark-bg); }
         
-        /* Smooth Slide-and-Push Animation */
-        .slide-push { animation: pushIn 0.5s ease-out forwards; }
-        @keyframes pushIn {
-            0% { transform: translateX(-40px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
+        /* FIXED: Changed from horizontal (translateX) to vertical top-to-bottom (translateY) */
+        .slide-push { animation: slideDown 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; }
+        @keyframes slideDown {
+            0% { transform: translateY(-30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* FIXED: Added missing Fade-In-Up animation rules for header components */
+        .fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; }
+        @keyframes fadeInUp {
+            0% { transform: translateY(25px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
         .landing-container { width: 100%; max-width: 100%; background: var(--dark-bg); padding-top: 1px; margin-top: -1px; }
@@ -104,7 +111,7 @@
     <div class="landing-container" id="mainAppCard">
         <div class="hero-banner-container">
             <div class="hero-banner-image"></div>
-            <div class="brand-header-overlay">
+            <div class="brand-header-overlay fade-in-up">
                 <img src="logo-Luxcity-2024.png" alt="Luxcity Logo" class="brand-logo">
                 <h1 class="brand-title-main">Luxcity Hotel & Apartment</h1>
             </div>
@@ -112,11 +119,11 @@
 
         <div class="content-wrapper">
             <div class="content-top-block">
-                <section class="hotel-info-section">
+                <section class="hotel-info-section fade-in-up" style="animation-delay: 0.2s;">
                     <strong>Welcome to Luxcity Hotel & Apartment</strong> – Phnom Penh's premier destination for luxury accommodation and a seamless blend of modern hotel convenience and full-service apartment comfort.
                 </section>
 
-                <div class="selection-box">
+                <div class="selection-box fade-in-up" style="animation-delay: 0.4s;">
                     <label for="roomSelect">Choose a Room Style</label>
                     <div class="punchline">See it. Love it. <span>Secure it instantly.</span></div>
                     
@@ -157,7 +164,7 @@
                         <div class="feature-col" id="col1"></div>
                         <div class="feature-col" id="col2"></div>
                     </div>
-                </section> cut here
+                </section>
 
                 <section class="facility-showcase">
                     <div class="facility-showcase-title">Explore Our Premium Facilities</div>
@@ -265,40 +272,31 @@
 
             if (!data) return;
 
-            // Clear any existing delay so the video doesn't play unexpectedly
             if (playTimeout) clearTimeout(playTimeout);
 
             const video = document.getElementById('roomVideo');
-
-            // 1. Update the poster (thumbnail) and direct video source url safely
             video.poster = data.thumbnail;
             video.src = data.video;
-
-            // 2. Load the new video and pause it immediately to show the poster
             video.load();
             video.pause();
 
-            // 3. Set the 2-second delay for playing
             playTimeout = setTimeout(() => {
                 video.muted = true;
                 video.play().catch(err => console.log("Autoplay blocked."));
             }, 2000); 
 
-            // --- FEATURE COLUMN LOGIC WITH ANIMATION ---
+            // --- FEATURE COLUMN LOGIC WITH UPDATED VERTICAL ANIMATION ---
             const col1 = document.getElementById('col1');
             const col2 = document.getElementById('col2');
             const featureTitle = document.getElementById('featureTitle');
 
-            // Remove the animation class to reset it
             if (col1) col1.classList.remove('slide-push');
             if (col2) col2.classList.remove('slide-push');
 
-            // Clear content & update title
             if (col1) col1.innerHTML = '';
             if (col2) col2.innerHTML = '';
             if (featureTitle) featureTitle.innerText = data.title;
 
-            // Split features into two columns
             if (data.features) {
                 const mid = Math.ceil(data.features.length / 2);
                 const firstHalf = data.features.slice(0, mid);
@@ -315,7 +313,7 @@
                 if (col2) secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
             }
 
-            // Trigger reflow & re-apply the Push animation to both columns
+            // Reflow triggers to securely re-apply the newly defined top-to-bottom animation
             if (col1) void col1.offsetWidth;
             if (col2) void col2.offsetWidth;
             
@@ -323,7 +321,6 @@
             if (col2) col2.classList.add('slide-push');
         }
 
-        // Safe Initialization: Ensures execution even if script parses after DOM finishes loading
         if (document.readyState === 'loading') {
             window.addEventListener('DOMContentLoaded', updatePageData);
         } else {
@@ -349,10 +346,8 @@
             track.style.transform = `translateX(-${currentCarouselIndex * (cardWidth + gap)}px)`;
         }
 
-        // Start the automatic sliding loop
         setInterval(autoSlideFacilities, 3500);
 
-        // Reset track positioning when window resizes
         window.addEventListener('resize', () => {
             currentCarouselIndex = 0;
             if (track) {
