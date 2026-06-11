@@ -40,6 +40,9 @@
 
         html, body { margin: 0 !important; padding: 0 !important; border: 0 !important; background-color: var(--dark-bg); }
 
+        .slide-push {animation: pushIn 0.5s ease-out forwards;}
+
+        @keyframes pushIn {0% {transform: translateX(-40px); opacity: 0; } 100% { transform: translateX(0); opacity: 1;}}
 
 
         .landing-container { width: 100%; max-width: 100%; background: var(--dark-bg); padding-top: 1px; margin-top: -1px; }
@@ -512,177 +515,106 @@
 
         // Add this variable at the very top of your <script> section (outside the function)
 
-        let playTimeout;
+        // Add this variable at the very top of your <script> section (outside the function)
+let playTimeout;
 
+function updatePageData() {
+    const selectedKey = document.getElementById('roomSelect').value;
+    const data = roomData[selectedKey];
 
+    if (!data) return;
 
-        function updatePageData() {
+    // Clear any existing delay so the video doesn't play unexpectedly
+    if (playTimeout) clearTimeout(playTimeout);
 
-            const selectedKey = document.getElementById('roomSelect').value;
+    const video = document.getElementById('roomVideo');
+    const source = document.getElementById('videoSource');
 
-            const data = roomData[selectedKey];
+    // 1. Update the poster (thumbnail) and source
+    video.poster = data.thumbnail;
+    source.src = data.video;
 
-   
+    // 2. Load the new video and pause it immediately to show the poster
+    video.load();
+    video.pause();
 
-            if (!data) return;
-
-
-
-            // Clear any existing delay so the video doesn't play unexpectedly
-
-            if (playTimeout) clearTimeout(playTimeout);
-
-
-
-        const video = document.getElementById('roomVideo');
-
-        const source = document.getElementById('videoSource');
-
-   
-
-        // 1. Update the poster (thumbnail) and source
-
-        video.poster = data.thumbnail;
-
-        source.src = data.video;
-
-   
-
-        // 2. Load the new video and pause it immediately to show the poster
-
-        video.load();
-
-        video.pause();
-
-
-
-        // 3. Set the 2-second delay for playing
-
-        playTimeout = setTimeout(() => {
-
+    // 3. Set the 2-second delay for playing
+    playTimeout = setTimeout(() => {
         video.muted = true;
-
         video.play().catch(err => console.log("Autoplay blocked."));
+    }, 2000); 
 
-    }, 2000); // 2000 milliseconds = 2 seconds
+    // --- FEATURE COLUMN LOGIC WITH ANIMATION ---
+    const col1 = document.getElementById('col1');
+    const col2 = document.getElementById('col2');
+    const featureTitle = document.getElementById('featureTitle');
 
+    // Remove the animation class to reset it
+    if (col1) col1.classList.remove('slide-push');
+    if (col2) col2.classList.remove('slide-push');
 
+    // Clear content & update title
+    if (col1) col1.innerHTML = '';
+    if (col2) col2.innerHTML = '';
+    if (featureTitle) featureTitle.innerText = data.title;
 
-        // --- FEATURE COLUMN LOGIC (Kept same as before) ---
-
-        const col1 = document.getElementById('col1');
-
-        const col2 = document.getElementById('col2');
-
-        const featureTitle = document.getElementById('featureTitle');
-
-
-
-        col1.innerHTML = '';
-
-        col2.innerHTML = '';
-
-        featureTitle.innerText = data.title;
-
-
-
+    // Split features into two columns
+    if (data.features) {
         const mid = Math.ceil(data.features.length / 2);
-
         const firstHalf = data.features.slice(0, mid);
-
         const secondHalf = data.features.slice(mid);
 
-
-
         const createItem = (text) => {
-
             const div = document.createElement('div');
-
             div.className = 'feature-item';
-
             div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>${text}</span>`;
-
             return div;
-
         };
 
-
-
-        firstHalf.forEach(feat => col1.appendChild(createItem(feat)));
-
-        secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
-
+        if (col1) firstHalf.forEach(feat => col1.appendChild(createItem(feat)));
+        if (col2) secondHalf.forEach(feat => col2.appendChild(createItem(feat)));
     }
 
+    // Trigger reflow & re-apply the Push animation to both columns
+    if (col1) void col1.offsetWidth;
+    if (col2) void col2.offsetWidth;
+    
+    if (col1) col1.classList.add('slide-push');
+    if (col2) col2.classList.add('slide-push');
+}
 
+// Initialize on load
+window.addEventListener('DOMContentLoaded', updatePageData);
 
-        // Initialize on load
+// --- CAROUSEL LOGIC ---
+let currentCarouselIndex = 0;
+const track = document.getElementById('facilityTrack');
 
-        window.addEventListener('DOMContentLoaded', updatePageData);
+function autoSlideFacilities() {
+    const cards = document.querySelectorAll('.facility-card');
+    if (cards.length === 0 || !track) return;
+    
+    const cardStyle = window.getComputedStyle(cards[0]);
+    const cardWidth = cards[0].offsetWidth;
+    const gap = parseFloat(cardStyle.marginRight) || 16;
+    
+    let visibleCards = window.innerWidth <= 600 ? 1 : 3;
+    const maxIndex = cards.length - visibleCards;
+    
+    currentCarouselIndex = (currentCarouselIndex >= maxIndex) ? 0 : currentCarouselIndex + 1;
+    track.style.transform = `translateX(-${currentCarouselIndex * (cardWidth + gap)}px)`;
+}
 
+// Start the automatic sliding loop
+setInterval(autoSlideFacilities, 3500);
 
-
-        let currentCarouselIndex = 0;
-
-        const track = document.getElementById('facilityTrack');
-
-       
-
-        function autoSlideFacilities() {
-
-            const cards = document.querySelectorAll('.facility-card');
-
-            if (cards.length === 0) return;
-
-           
-
-            const cardStyle = window.getComputedStyle(cards[0]);
-
-            const cardWidth = cards[0].offsetWidth;
-
-            const gap = parseFloat(cardStyle.marginRight) || 16;
-
-           
-
-            let visibleCards = window.innerWidth <= 600 ? 1 : 3;
-
-            const maxIndex = cards.length - visibleCards;
-
-           
-
-            currentCarouselIndex++;
-
-            if (currentCarouselIndex > maxIndex) {
-
-                currentCarouselIndex = 0;
-
-            }
-
-           
-
-            const moveX = currentCarouselIndex * (cardWidth + gap);
-
-            track.style.transform = `translateX(-${moveX}px)`;
-
-        }
-
-       
-
-        setInterval(autoSlideFacilities, 3500);
-
-
-
-        window.addEventListener('resize', () => {
-
-            currentCarouselIndex = 0;
-
-            track.style.transform = 'translateX(0px)';
-
-        });
-
-    </script>
-
+// Reset track positioning when window resizes
+window.addEventListener('resize', () => {
+    currentCarouselIndex = 0;
+    if (track) {
+        track.style.transform = 'translateX(0px)';
+    }
+});
+</script>
 </body>
-
-</html> 
-
+</html>
